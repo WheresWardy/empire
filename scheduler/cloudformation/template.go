@@ -690,28 +690,26 @@ func (t *EmpireTemplate) addService(tmpl *troposphere.Template, app *twelvefacto
 		"ServiceName":    fmt.Sprintf("%s-%s", app.Name, p.Type),
 		"ServiceToken":   t.CustomResourcesTopic,
 	}
-	if p.ECS != nil {
-		if placement := p.ECS.Placement; placement != nil {
-			if placement.Constraints != nil && len(placement.Constraints) > 0 {
-				var placementConstraints []interface{}
-				for _, c := range placement.Constraints {
-					placementConstraints = append(placementConstraints, map[string]interface{}{
-						"Type":       c.Type,
-						"Expression": c.Expression,
-					})
-				}
-				serviceProperties["PlacementConstraints"] = placementConstraints
+	if v := p.ECS; v != nil {
+		if v.PlacementConstraints != nil && len(v.PlacementConstraints) > 0 {
+			var placementConstraints []interface{}
+			for _, c := range v.PlacementConstraints {
+				placementConstraints = append(placementConstraints, map[string]interface{}{
+					"Type":       c.Type,
+					"Expression": c.Expression,
+				})
 			}
-			if placement.Strategy != nil && len(placement.Strategy) > 0 {
-				var placementStrategy []interface{}
-				for _, c := range placement.Strategy {
-					placementStrategy = append(placementStrategy, map[string]interface{}{
-						"Type":  c.Type,
-						"Field": c.Field,
-					})
-				}
-				serviceProperties["PlacementStrategy"] = placementStrategy
+			serviceProperties["PlacementConstraints"] = placementConstraints
+		}
+		if v.PlacementStrategy != nil && len(v.PlacementStrategy) > 0 {
+			var placementStrategy []interface{}
+			for _, c := range v.PlacementStrategy {
+				placementStrategy = append(placementStrategy, map[string]interface{}{
+					"Type":  c.Type,
+					"Field": c.Field,
+				})
 			}
+			serviceProperties["PlacementStrategy"] = placementStrategy
 		}
 	}
 	if len(loadBalancers) > 0 {

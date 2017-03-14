@@ -439,10 +439,8 @@ func TestEmpireTemplate(t *testing.T) {
 						Quantity:  1,
 						Nproc:     256,
 						ECS: &procfile.ECS{
-							Placement: &procfile.Placement{
-								Constraints: []*ecs.PlacementConstraint{
-									{Type: aws.String("memberOf"), Expression: aws.String("attribute:ecs.instance-type =~ t2.*")},
-								},
+							PlacementConstraints: []*ecs.PlacementConstraint{
+								{Type: aws.String("memberOf"), Expression: aws.String("attribute:ecs.instance-type =~ t2.*")},
 							},
 						},
 					},

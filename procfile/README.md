@@ -85,13 +85,12 @@ This allows you to specify any ECS specific properties, like placement strategie
 
 ```yaml
 ecs:
-  placement:
-    constraints:
-      - type: memberOf
-        expression: "attribute:ecs.instance-type =~ t2.*"
-    strategy:
-      - type: spread
-        field: "attribute:ecs.availability-zone"
+  placement_constraints:
+    - type: memberOf
+      expression: "attribute:ecs.instance-type =~ t2.*"
+  placement_strategy:
+    - type: spread
+      field: "attribute:ecs.availability-zone"
 ```
 
 See http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement.html for details.

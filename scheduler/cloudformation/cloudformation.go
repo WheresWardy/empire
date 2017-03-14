@@ -965,11 +965,9 @@ func (m *Scheduler) Run(ctx context.Context, app *twelvefactor.Manifest, process
 		Count:          aws.Int64(1),
 		StartedBy:      aws.String(app.AppID),
 	}
-	if process.ECS != nil {
-		if placement := process.ECS.Placement; placement != nil {
-			input.PlacementConstraints = placement.Constraints
-			input.PlacementStrategy = placement.Strategy
-		}
+	if v := process.ECS; v != nil {
+		input.PlacementConstraints = v.PlacementConstraints
+		input.PlacementStrategy = v.PlacementStrategy
 	}
 	runResp, err := m.ecs.RunTask(input)
 	if err != nil {

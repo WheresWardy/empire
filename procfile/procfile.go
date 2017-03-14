@@ -37,13 +37,8 @@ type Process struct {
 
 // ECS specific options.
 type ECS struct {
-	Placement *Placement `yaml:"placement"`
-}
-
-// Placement constraints/strategy.
-type Placement struct {
-	Constraints []*ecs.PlacementConstraint `yaml:"constraints"`
-	Strategy    []*ecs.PlacementStrategy   `yaml:"strategy"`
+	PlacementConstraints []*ecs.PlacementConstraint `yaml:"placement_constraints"`
+	PlacementStrategy    []*ecs.PlacementStrategy   `yaml:"placement_strategy"`
 }
 
 // Port represents a port mapping.
