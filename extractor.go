@@ -262,6 +262,7 @@ func formationFromExtendedProcfile(p procfile.ExtendedProcfile) (Formation, erro
 			NoService:   process.NoService,
 			Ports:       ports,
 			Environment: process.Environment,
+			ECS:         process.ECS,
 		}
 	}
 

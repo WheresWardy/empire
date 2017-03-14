@@ -10,6 +10,7 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/remind101/empire/pkg/image"
+	"github.com/remind101/empire/procfile"
 	"github.com/remind101/pkg/logger"
 )
 
@@ -67,6 +68,9 @@ type Process struct {
 
 	// Can be used to setup a CRON schedule to run this task periodically.
 	Schedule Schedule
+
+	// Any ECS specific configuration.
+	ECS *procfile.ECS
 }
 
 // Schedule represents a Schedule for scheduled tasks that run periodically.

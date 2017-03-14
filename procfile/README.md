@@ -78,3 +78,20 @@ This allows you to set process specific environment variables. If these are set 
 environment:
   EMPIRE_X_LOAD_BALANCER_TYPE: "alb"
 ```
+
+**ECS**
+
+This allows you to specify any ECS specific properties, like placement strategies and constraints:
+
+```yaml
+ecs:
+  placement:
+    constraints:
+      - type: memberOf
+        expression: "attribute:ecs.instance-type =~ t2.*"
+    strategy:
+      - type: spread
+        field: "attribute:ecs.availability-zone"
+```
+
+See http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-placement.html for details.

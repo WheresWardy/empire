@@ -690,6 +690,30 @@ func (t *EmpireTemplate) addService(tmpl *troposphere.Template, app *twelvefacto
 		"ServiceName":    fmt.Sprintf("%s-%s", app.Name, p.Type),
 		"ServiceToken":   t.CustomResourcesTopic,
 	}
+	if p.ECS != nil {
+		if placement := p.ECS.Placement; placement != nil {
+			if placement.Constraints != nil && len(placement.Constraints) > 0 {
+				var placementConstraints []interface{}
+				for _, c := range placement.Constraints {
+					placementConstraints = append(placementConstraints, map[string]interface{}{
+						"Type":       c.Type,
+						"Expression": c.Expression,
+					})
+				}
+				serviceProperties["PlacementConstraints"] = placementConstraints
+			}
+			if placement.Strategy != nil && len(placement.Strategy) > 0 {
+				var placementStrategy []interface{}
+				for _, c := range placement.Strategy {
+					placementStrategy = append(placementStrategy, map[string]interface{}{
+						"Type":  c.Type,
+						"Field": c.Field,
+					})
+				}
+				serviceProperties["PlacementStrategy"] = placementStrategy
+			}
+		}
+	}
 	if len(loadBalancers) > 0 {
 		serviceProperties["Role"] = t.ServiceRole
 	}

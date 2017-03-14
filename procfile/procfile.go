@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/service/ecs"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -30,6 +32,18 @@ type Process struct {
 	NoService   bool              `yaml:"noservice,omitempty"`
 	Ports       []Port            `yaml:"ports,omitempty"`
 	Environment map[string]string `yaml:"environment,omitempty"`
+	ECS         *ECS              `yaml:"ecs,omitempty"`
+}
+
+// ECS specific options.
+type ECS struct {
+	Placement *Placement `yaml:"placement"`
+}
+
+// Placement constraints/strategy.
+type Placement struct {
+	Constraints []*ecs.PlacementConstraint `yaml:"constraints"`
+	Strategy    []*ecs.PlacementStrategy   `yaml:"strategy"`
 }
 
 // Port represents a port mapping.
